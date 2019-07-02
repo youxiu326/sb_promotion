@@ -12,7 +12,15 @@ public class Product implements Serializable {
 
     private String name;
 
+    /**
+     * 销售价
+     */
     private BigDecimal amount;
+
+    /**
+     * 优惠金额
+     */
+    private BigDecimal discountAmount;
 
     private Integer quantity;
 
@@ -55,5 +63,13 @@ public class Product implements Serializable {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public BigDecimal getDiscountAmount() {
+        return discountAmount;
+    }
+
+    public void setDiscountAmount(BigDecimal discountAmount) {
+        this.discountAmount = discountAmount;
     }
 }

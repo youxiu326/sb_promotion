@@ -14,7 +14,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 促销service
@@ -41,14 +43,21 @@ public class PromotionServiceImpl implements PromotionService {
         PromotionContext.strategys =  application.getBeansOfType(PromotionStrategy.class).values();
     }
 
-    public Object settlement(List<Product> products){
+    @Override
+    public Map<String,Object> settlement(List<Product> products) throws ServiceException{
 
+
+        Map<String,Object> resultMap = new HashMap<>();
 
         //查询可用促销
         List<Promotion> promotions = findUsablePromotions();
+        //执行促销
+        List<PromotionResult> result = execute(promotions,products);
 
-
-        return null;
+        //返回促销结果 与商品
+        resultMap.put("promotionResult", result);
+        resultMap.put("products", products);
+        return resultMap;
     }
 
     /**
@@ -82,6 +91,9 @@ public class PromotionServiceImpl implements PromotionService {
 
         }
 
+        //TODO 如果有的促销参加多次，应该要进行一定处理，只取一个即可
+
+
         LOGGER.info("促销执行结束");
         return promotionResults;
     }
@@ -111,6 +123,7 @@ public class PromotionServiceImpl implements PromotionService {
      * @param products 要过滤的商品集合
      * @return 返回过滤后的商品集合
      */
+    @Override
     public List<Product> filterProduct(Promotion promotion, List<Product> products){
         List<Product> list = new ArrayList<Product>();
 

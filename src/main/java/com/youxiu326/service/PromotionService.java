@@ -6,8 +6,8 @@ import com.youxiu326.entity.PromotionResult;
 import com.youxiu326.exception.ServiceException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.Map;
 
 public interface PromotionService {
 
@@ -20,7 +20,7 @@ public interface PromotionService {
      * @param products 要结算的商品集合
      * @return Object 返回结算后的对象
      */
-    public Object settlement(List<Product> products);
+    public Map<String,Object> settlement(List<Product> products) throws ServiceException;
 
     /**
      * 查询可用的促销

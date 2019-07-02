@@ -6,6 +6,8 @@ import com.youxiu326.entity.Promotion;
 import com.youxiu326.entity.PromotionResult;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +28,17 @@ public class ReduceStrategy extends PromotionStrategy {
 
     @Override
     public List<PromotionResult> execute(Promotion promotion, List<Product> products) {
+
+        List<PromotionResult> results = new ArrayList<>();
+
+        BigDecimal sum = new BigDecimal("0");
+
+        for (Product product:products){
+            sum = sum.add(product.getAmount());
+        }
+
+        if (sum.compareTo(new BigDecimal("100"))==-1) return null;
+
         return null;
     }
 
