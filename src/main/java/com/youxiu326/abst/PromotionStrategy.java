@@ -14,6 +14,10 @@ public abstract class PromotionStrategy {
 
     public abstract Promotion.Type getType();
 
+    /**
+     * 定义执行促销方法
+     * @return 返回促销结果
+     */
     public abstract List<PromotionResult> execute();
 
 } 

@@ -9,10 +9,10 @@ import java.util.List;
 public class Promotion implements Serializable {
 
     /**
-     *  促销类型
-     * FREEONE  免最低一件
-     * REBATE   八折
-     * REDUCE   满100减20
+     *  <span color="red">促销类型:</span>
+     *  <br>FREEONE  免最低一件
+     *  <br>REBATE   八折
+     *  <br>REDUCE   满100减20
      */
     public static enum Type{
         FREEONE,REBATE,REDUCE
