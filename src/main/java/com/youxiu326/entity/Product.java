@@ -64,6 +64,10 @@ public class Product implements Serializable {
         return amount;
     }
 
+    public double getAmountDouble(){
+        return amount.doubleValue();
+    }
+
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
