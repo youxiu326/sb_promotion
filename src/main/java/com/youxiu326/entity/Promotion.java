@@ -27,5 +27,34 @@ public class Promotion implements Serializable {
      */
     private List<Product> products;
 
+    public Promotion(){}
+    public Promotion(Type type, String name,List<Product> products) {
+        this.type = type;
+        this.name = name;
+        this.products = products;
+    }
 
-} 
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+}

@@ -1,5 +1,6 @@
 package com.youxiu326.abst;
 
+import com.youxiu326.entity.Product;
 import com.youxiu326.entity.Promotion;
 import com.youxiu326.entity.PromotionResult;
 
@@ -16,8 +17,10 @@ public abstract class PromotionStrategy {
 
     /**
      * 定义执行促销方法
-     * @return 返回促销结果
+     * @param promotion 促销
+     * @param products  参加促销的商品集合
+     * @return
      */
-    public abstract List<PromotionResult> execute();
+    public abstract List<PromotionResult> execute(Promotion promotion, List<Product> products);
 
 } 

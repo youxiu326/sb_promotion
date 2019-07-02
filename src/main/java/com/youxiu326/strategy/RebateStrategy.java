@@ -1,8 +1,10 @@
 package com.youxiu326.strategy;
 
 import com.youxiu326.abst.PromotionStrategy;
+import com.youxiu326.entity.Product;
 import com.youxiu326.entity.Promotion;
 import com.youxiu326.entity.PromotionResult;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -10,6 +12,7 @@ import java.util.List;
  * 满足大于200
  * <br>八折促销
  */
+@Component
 public class RebateStrategy extends PromotionStrategy {
 
     /**
@@ -22,7 +25,7 @@ public class RebateStrategy extends PromotionStrategy {
     }
 
     @Override
-    public List<PromotionResult> execute() {
+    public List<PromotionResult> execute(Promotion promotion, List<Product> products) {
         return null;
     }
 
