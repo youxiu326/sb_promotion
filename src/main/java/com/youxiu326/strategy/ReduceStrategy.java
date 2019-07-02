@@ -5,7 +5,6 @@ import com.youxiu326.entity.Product;
 import com.youxiu326.entity.Promotion;
 import com.youxiu326.entity.PromotionResult;
 import org.springframework.stereotype.Component;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;

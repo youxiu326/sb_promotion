@@ -5,7 +5,6 @@ import com.youxiu326.entity.Product;
 import com.youxiu326.entity.Promotion;
 import com.youxiu326.entity.PromotionResult;
 import org.springframework.stereotype.Component;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,7 @@ public class RebateStrategy extends PromotionStrategy {
 
         //TODO 这儿简单处理定死了规则
         //不满足促销规则的返回空促销
-        if (totalAmount<=500){
+        if (totalAmount<200){
             return null;
         }
 
