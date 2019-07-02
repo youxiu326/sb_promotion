@@ -18,9 +18,15 @@ public class Product implements Serializable {
     private BigDecimal amount;
 
     /**
-     * 优惠金额
+     * 优惠了多少金额
      */
     private BigDecimal discountAmount;
+
+    /**
+     * 优惠后金额
+     */
+    private BigDecimal finalAmount = new BigDecimal("-1");
+
 
     private Integer quantity;
 
@@ -71,5 +77,20 @@ public class Product implements Serializable {
 
     public void setDiscountAmount(BigDecimal discountAmount) {
         this.discountAmount = discountAmount;
+    }
+
+    /**
+     * 优惠后金额(默认等于交易金额)
+     * @return
+     */
+    public BigDecimal getFinalAmount() {
+        if(finalAmount.compareTo(new BigDecimal("-1"))==0) {
+            finalAmount = amount;
+        }
+        return finalAmount;
+    }
+
+    public void setFinalAmount(BigDecimal finalAmount) {
+        this.finalAmount = finalAmount;
     }
 }

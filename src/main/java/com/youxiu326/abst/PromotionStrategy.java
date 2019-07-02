@@ -3,7 +3,6 @@ package com.youxiu326.abst;
 import com.youxiu326.entity.Product;
 import com.youxiu326.entity.Promotion;
 import com.youxiu326.entity.PromotionResult;
-
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -46,6 +45,9 @@ public abstract class PromotionStrategy {
 
      */
 
+    //disAmount 优惠金额    discountAmount
+    //disPrice 优惠后价格 -1(默认等于销售金额) finalAmount
+    //price 销售价 amount
 
     /**
      * <span color="red">平摊优惠金额</span>
@@ -56,7 +58,7 @@ public abstract class PromotionStrategy {
 
         //计算总金额
         double totalAmountTemp = products.stream().mapToDouble(it->(
-                it.getAmount().multiply(new BigDecimal(it.getQuantity().toString()))).doubleValue()
+                it.getFinalAmount().multiply(new BigDecimal(it.getQuantity().toString()))).doubleValue()
         ).sum();
 
         //总金额
@@ -69,22 +71,36 @@ public abstract class PromotionStrategy {
             Product product = products.get(i);
             if(i == products.size() - 1) {
                 //如果是最后一件商品 ，将剩余优惠金额计算到这个商品内
-                //product.setDisAmount(formatDouble2Decimal(product.getDisAmount()+disAmount-sharedAmount));
-                product.setDiscountAmount(product.getAmount().add(disAmount).subtract(sharedAmount));
+                //例如:
+                // 商品001 销售价10 数量1      商品002 销售价20 数量2     商品001,002 总共优惠了5元
+                // 商品001 已经确定可优惠1元
+                // 那么最后一个商品002 可以优惠 6-1 5元
+
+                product.setDiscountAmount(product.getDiscountAmount().add(disAmount).subtract(sharedAmount));
             }else {
-                //double itemDisAmount = disAmount*(product.getAmount()*product.getQuantity())/totalAmount;
                 //该商品总数量
                 BigDecimal quantity = new BigDecimal(product.getQuantity().toString());
 
-                BigDecimal itemDisAmount = ( disAmount.multiply(product.getAmount().multiply(quantity)) )
-                        .divide(totalAmount,20,BigDecimal.ROUND_HALF_UP);
+                //将总优惠金额 * (该商品销售价/总销售价) 得出该商品所占优惠金额
+                // 例如:
+                // 商品001 销售价10 数量1      商品002 销售价20 数量2     商品001,002 总共优惠了5元
+                // 商品001可优惠金额= 5*(10*1/50)     1元
+                // 商品002可优惠金额= 5*(20*2/50)     4元
+
+                //得出该商品可优惠金额
+                BigDecimal itemDisAmount = disAmount.multiply(
+                        (product.getAmount().multiply(quantity).divide(totalAmount,2,BigDecimal.ROUND_HALF_UP))
+                );
 
                 product.setDiscountAmount(product.getDiscountAmount().add(itemDisAmount));
 
                 sharedAmount =sharedAmount.add(itemDisAmount);
             }
         }
-        //平摊价格
-        //products.stream().forEach(it->it.setDisPrice(formatDouble2Decimal(it.getDisPrice()-(disAmount*(it.getDisPrice()*it.getQuantity()/totalAmount)/it.getQuantity()))));
+
+        //计算出 商品优惠后的价格 finalAmount
+        products.stream().forEach(it->{
+            it.setFinalAmount(it.getAmount().subtract(it.getDiscountAmount()));
+        });
     }
 } 
