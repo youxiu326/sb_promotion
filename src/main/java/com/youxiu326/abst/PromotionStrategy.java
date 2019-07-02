@@ -42,12 +42,11 @@ public abstract class PromotionStrategy {
     if(b1.compareTo(BigDecimal.ZERO)==-1) {
     	System.out.println("金额为负数！");
     }
+    */
 
-     */
-
-    //disAmount 优惠金额    discountAmount
-    //disPrice 优惠后价格 -1(默认等于销售金额) finalAmount
-    //price 销售价 amount
+    //优惠金额    discountAmount
+    //优惠后价格 -1(默认等于销售金额) finalAmount
+    //销售价       amount
 
     /**
      * <span color="red">平摊优惠金额</span>
@@ -70,7 +69,7 @@ public abstract class PromotionStrategy {
         for(int i=0;i<products.size();i++) {
             Product product = products.get(i);
             if(i == products.size() - 1) {
-                //如果是最后一件商品 ，将剩余优惠金额计算到这个商品内
+                //② 如果是最后一件商品 ，将剩余优惠金额计算到这个商品内
                 //例如:
                 // 商品001 销售价10 数量1      商品002 销售价20 数量2     商品001,002 总共优惠了5元
                 // 商品001 已经确定可优惠1元
@@ -81,7 +80,7 @@ public abstract class PromotionStrategy {
                 //该商品总数量
                 BigDecimal quantity = new BigDecimal(product.getQuantity().toString());
 
-                //将总优惠金额 * (该商品销售价/总销售价) 得出该商品所占优惠金额
+                //① 将总优惠金额 * (该商品销售价/总销售价) 得出该商品所占优惠金额
                 // 例如:
                 // 商品001 销售价10 数量1      商品002 销售价20 数量2     商品001,002 总共优惠了5元
                 // 商品001可优惠金额= 5*(10*1/50)     1元
@@ -98,7 +97,7 @@ public abstract class PromotionStrategy {
             }
         }
 
-        //计算出 商品优惠后的价格 finalAmount
+        // ③计算出 商品优惠后的价格 finalAmount
         products.stream().forEach(it->{
             it.setFinalAmount(it.getAmount().subtract(it.getDiscountAmount()));
         });

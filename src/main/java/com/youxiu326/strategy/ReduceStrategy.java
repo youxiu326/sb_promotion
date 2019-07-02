@@ -31,15 +31,32 @@ public class ReduceStrategy extends PromotionStrategy {
 
         List<PromotionResult> results = new ArrayList<>();
 
-        BigDecimal sum = new BigDecimal("0");
+        //计算总金额 总数量
+        double totalAmount = products.stream().mapToDouble(it->(
+                (it.getAmount().multiply(new BigDecimal(it.getQuantity().toString())))).subtract(it.getDiscountAmount()).doubleValue()
+        ).sum();
+        int totalQuantity =  products.stream().mapToInt(it->it.getQuantity()).sum();
 
-        for (Product product:products){
-            sum = sum.add(product.getAmount());
+        //TODO 这儿简单处理定死了规则
+        //不满足促销规则的返回空促销
+        if (totalAmount<100){
+            return null;
         }
 
-        if (sum.compareTo(new BigDecimal("100"))==-1) return null;
+        //获得可优惠金额
+        double reduceAmount = 10;
 
-        return null;
+        //平摊金额
+        sharedAmount(products, new BigDecimal(reduceAmount+""));
+
+        //创建减免促销信息
+        PromotionResult result = new PromotionResult();
+        result.setName(promotion.getName());
+        result.setType(Promotion.Type.REDUCE);
+        result.setResult(reduceAmount);
+        results.add(result);
+
+        return results;
     }
 
 } 

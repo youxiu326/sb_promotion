@@ -4,7 +4,12 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * 商品
+ * 商品:
+ *
+ * <br>优惠金额    <span color="red">discountAmount</span>
+ * <br>优惠后价格 -1(默认等于销售金额) <span color="red">finalAmount</span>
+ * <br>销售价       <span color="red">amount</span>
+ *
  */
 public class Product implements Serializable {
 
