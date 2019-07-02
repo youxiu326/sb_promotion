@@ -32,18 +32,18 @@ public class RebateStrategy extends PromotionStrategy {
 
         //计算总金额 总数量
         double totalAmount = products.stream().mapToDouble(it->(
-                (it.getAmount().multiply(new BigDecimal(it.getQuantity().toString())))).subtract(it.getFinalAmount()).doubleValue()
+                (it.getAmount().multiply(new BigDecimal(it.getQuantity().toString())))).subtract(it.getDiscountAmount()).doubleValue()
         ).sum();
         int totalQuantity =  products.stream().mapToInt(it->it.getQuantity()).sum();
 
         //TODO 这儿简单处理定死了规则
         //不满足促销规则的返回空促销
         if (totalAmount<200){
-            return null;
+            return results;
         }
 
         //获得可优惠金额
-        double reduceAmount = totalAmount * 0.8;
+        double reduceAmount = totalAmount * 0.2;
 
         //平摊金额
         sharedAmount(products, new BigDecimal(reduceAmount+""));

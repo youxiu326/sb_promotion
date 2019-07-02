@@ -20,12 +20,12 @@ public class Product implements Serializable {
     /**
      * 销售价
      */
-    private BigDecimal amount;
+    private BigDecimal amount = BigDecimal.ZERO;
 
     /**
      * 优惠了多少金额
      */
-    private BigDecimal discountAmount;
+    private BigDecimal discountAmount = BigDecimal.ZERO;
 
     /**
      * 优惠后金额
