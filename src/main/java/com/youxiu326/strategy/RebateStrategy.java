@@ -32,7 +32,7 @@ public class RebateStrategy extends PromotionStrategy {
 
         //计算总金额 总数量
         double totalAmount = products.stream().mapToDouble(it->(
-                (it.getAmount().multiply(new BigDecimal(it.getQuantity().toString())))).subtract(it.getDiscountAmount()).doubleValue()
+                (it.getAmount().multiply(new BigDecimal(it.getQuantity().toString())))).subtract(it.getFinalAmount()).doubleValue()
         ).sum();
         int totalQuantity =  products.stream().mapToInt(it->it.getQuantity()).sum();
 
