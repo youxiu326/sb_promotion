@@ -18,7 +18,6 @@ import java.util.Map;
 @SpringBootTest
 public class SbPromotionApplicationTests {
 
-
     @Autowired
     PromotionService service;
 
@@ -32,10 +31,10 @@ public class SbPromotionApplicationTests {
         Product p3 = new Product("YX003", "圆珠笔", new BigDecimal("20"), 2);
         Product p4 = new Product("YX004", "水杯", new BigDecimal("60"), 1);
         Product p5 = new Product("YX005", "充电宝", new BigDecimal("400"), 1);
-        /*products.add(p1);
+        products.add(p1);
         products.add(p2);
         products.add(p3);
-        products.add(p4);*/
+        products.add(p4);
         products.add(p5);
 
         Map<String, Object> result = service.settlement(products);

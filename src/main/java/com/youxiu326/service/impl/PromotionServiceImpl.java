@@ -86,8 +86,9 @@ public class PromotionServiceImpl implements PromotionService {
 
             //根据策略模式 执行先对应的促销规则，返回促销结果
             List<PromotionResult> result = context.execute(filterProductList);
-
-            promotionResults.addAll(result);
+            if (result!=null){
+                promotionResults.addAll(result);
+            }
 
         }
 
