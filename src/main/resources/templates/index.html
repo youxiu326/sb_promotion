@@ -6,81 +6,89 @@
     <title>springboot+策略模式 实现简单促销</title>
 </head>
 <body>
-<h2>商品列表</h2>
+<h2>提交商品</h2>
+
+<body>
 
 <table>
     <tr>
-        <td>商品编号</td>
+        <td>商品名称</td>
+        <td>商品价格</td>
         <td>商品数量</td>
+        <td>操作</td>
     </tr>
-    <tr  th:each="cart,iterStat : ${cartItems}">
-        <th scope="row" th:text="${cart.code}">1</th>
-        <td th:text="${cart.quantity}">quantity</td>
+    <tr>
+        <td><input id="name" /></td>
+        <td><input id="amount" type="number" /></td>
+        <td><input id="quantity" type="number" /></td>
+        <td><input type="button" value="添加该商品" onclick="data()"/></td>
     </tr>
 </table>
 
+<h6>已添加商品信息展示</h6>
+<table>
+    <tr>
+        <td>商品编号</td>
+        <td>商品名称</td>
+        <td>商品价格</td>
+        <td>商品数量</td>
+    </tr>
+    <tr>
+    </tr>
+</table>
+<input  type="button" onclick="sub()" value="将这些商品进行促销"/>
 
 
-<br/>
-
-
-<form action="#" method="post">
-    <table>
-        <tr>
-            <td>商品编号：</td>
-            <td><input type="text" id="code" name="code" value="youxiu001"></td>
-        </tr>
-        <tr>
-            <td>数量：</td>
-            <td><input id="quantity" name="quantity" value="1"></td>
-        </tr>
-        <tr>
-            <td colspan="1"><button type="button" onclick="add()">加购</button></td>
-            <td colspan="1"><button type="button" onclick="remove()">减购</button></td>
-        </tr>
-    </table>
-</form>
 
 </body>
 
 <script src="/jquery-1.11.3.min.js"></script>
 <script>
-    function add(){
-        $.ajax({
-            type: 'POST',
-            url: "/shopping/add",
-            data: {"code":$("#code").val(),"quantity":$("#quantity").val()},
-            // dataType: "json",
-            success: function(response){
-                if(response.code=="200"){
-                    window.location.reload();
-                }else{
-                    alert(response.message);
-                }
-            },
-            error:function(response){
-                alert(response.message);
-                console.log(response);
-            }
-        });
+
+    var products = [];
+    var num = 1;
+    <!-- 准备数据 -->
+    function data(){
+        var name = $("#name").val();
+        var amount = $("#amount").val();
+        var quantity = $("#quantity").val();
+        if(name=="" || amount=="" || quantity=="" || name==undefined || amount==undefined || quantity==undefined ){
+            alert("商品格式有误");
+            return ;
+        }
+        var code = "youxiu-"+ num;
+        num=num+1;
+        var product = {"code":code,"name":name,"amount":amount,"quantity":quantity};
+        products.push(product);
+        console.log(products);
     }
 
-     function remove(){
+    function sub(){
+        if(products.length<=0){
+            alert("请添加商品");
+            retur;
+        }
         $.ajax({
             type: 'POST',
-            url: "/shopping/remove",
-            data: {"code":$("#code").val(),"quantity":$("#quantity").val()},
-            // dataType: "json",
-            success: function(response){
-                if(response.code=="200"){
-                    window.location.reload();
-                }else{
-                    alert(response.message);
+            url: "/data",
+            data: JSON.stringify(products),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(map){
+                if(map==null){
+                    alert("出错了");
                 }
+                var promotionResult = map.promotionResult;
+                var result = map.products;
+                console.log("促销结果:");
+                console.log(promotionResult);
+                console.log();
+                console.log("促销后商品信息:");
+                console.log(result);
             },
-            error:function(response){
-                alert("失败");
-                console.log(response);
+            error:function(map){
+                alert(map);
+                console.log(map);
             }
         });
     }
