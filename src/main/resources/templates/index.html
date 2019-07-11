@@ -100,6 +100,7 @@
                 console.log(result);
 
                 //促销信息展示
+                $("#showPro").empty();
                 for(var i=0;i<promotionResult.length;i++){
                     var em = "<span>"+promotionResult[i].name+"------"+promotionResult[i].result+"</span><br>";
                     $("#showPro").append(em);
