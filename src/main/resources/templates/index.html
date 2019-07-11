@@ -25,20 +25,30 @@
     </tr>
 </table>
 
+
+<h6>购物车商品</h6>
+<div width="400px" height="400px" id="showShoop"></div>
+
+
+<br>
+<input  type="button" onclick="sub()" value="将这些商品进行促销"/>
+<br>
+
+<h6>参加促销信息展示</h6>
+<div width="400px" height="400px" id="showPro"></div>
+
+
 <h6>已添加商品信息展示</h6>
 <table>
     <tr>
         <td>商品编号</td>
         <td>商品名称</td>
-        <td>商品价格</td>
         <td>商品数量</td>
+        <td>优惠后总价</td>
+        <td>总优惠金额</td>
     </tr>
-    <tr>
-    </tr>
+    <tbody id="showTab"></tbody>
 </table>
-<input  type="button" onclick="sub()" value="将这些商品进行促销"/>
-
-
 
 </body>
 
@@ -61,6 +71,9 @@
         var product = {"code":code,"name":name,"amount":amount,"quantity":quantity};
         products.push(product);
         console.log(products);
+
+        var em = "<span>"+product.name+"--"+product.quantity+"--"+product.amount+"</span><br>";
+        $("#showShoop").append(em);
     }
 
     function sub(){
@@ -85,6 +98,19 @@
                 console.log();
                 console.log("促销后商品信息:");
                 console.log(result);
+
+                //促销信息展示
+                for(var i=0;i<promotionResult.length;i++){
+                    var em = "<span>"+promotionResult[i].name+"------"+promotionResult[i].result+"</span><br>";
+                    $("#showPro").append(em);
+                }
+
+                //促销商品展示
+                $("#showTab").empty();
+                for(var i=0;i<result.length;i++){
+                    var em = "<tr><td>"+result[i].code+"</td><td>"+result[i].name+"</td><td>"+result[i].quantity+"</td><td>"+result[i].finalAmount+"</td><td>"+result[i].discountAmount+"</td></tr>";
+                    $("#showTab").append(em);
+                }
             },
             error:function(map){
                 alert(map);
@@ -94,6 +120,5 @@
     }
 
 </script>
-
 
 </html>

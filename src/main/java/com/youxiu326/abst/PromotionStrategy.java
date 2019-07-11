@@ -99,7 +99,8 @@ public abstract class PromotionStrategy {
 
         // ③计算出 商品优惠后的价格 finalAmount
         products.stream().forEach(it->{
-            it.setFinalAmount(it.getAmount().subtract(it.getDiscountAmount()));
+            BigDecimal quantity = new BigDecimal(it.getQuantity().toString());
+            it.setFinalAmount(it.getAmount().multiply(quantity).subtract(it.getDiscountAmount()));
         });
     }
 } 
