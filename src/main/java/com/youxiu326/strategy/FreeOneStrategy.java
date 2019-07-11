@@ -40,7 +40,7 @@ public class FreeOneStrategy extends PromotionStrategy {
 
         //TODO 这儿简单处理定死了规则
         //不满足促销规则的返回空促销
-        if (totalAmount<500 || totalQuantity>1){
+        if (totalAmount<500 || totalQuantity<=1){
             return results;
         }
 
