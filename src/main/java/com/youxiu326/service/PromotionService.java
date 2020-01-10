@@ -44,4 +44,10 @@ public interface PromotionService {
      */
     public List<PromotionResult> execute(List<Promotion> promotions, List<Product> products) throws ServiceException;
 
+
+    /**
+     * 异步执行方法 @Async
+     */
+    public void asyncMethod();
+
 } 

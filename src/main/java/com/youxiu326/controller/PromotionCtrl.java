@@ -22,6 +22,10 @@ public class PromotionCtrl {
 
     @GetMapping("/index")
     public String index(){
+
+        for (int i = 0; i < 1000; i++) {
+            service.asyncMethod();
+        }
         return "index";
     }
 
